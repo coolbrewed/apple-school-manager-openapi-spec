@@ -1,0 +1,6 @@
+name: cursor
+description: The value of the cursor for pagination.
+in: query
+schema:
+  type: string
+example: NToxMToxNTkyMjU1OTcyMzUwOjE3NjM3NTI2NTM0NTM6ZmFsc2U6ZmFsc2U6MTc2Mzc1MjY1MTA0MA

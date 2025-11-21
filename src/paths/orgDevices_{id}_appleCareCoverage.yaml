@@ -11,6 +11,7 @@ get:
     - $ref: ../components/parameters/id.yaml
     - $ref: ../components/parameters/fieldsAppleCareCoverage.yaml
     - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/cursor.yaml
   responses:
     '200':
       description: OK

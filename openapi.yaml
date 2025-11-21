@@ -30,6 +30,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/fieldsMdmServers'
         - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
       responses:
         '200':
           description: OK
@@ -88,6 +89,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/id'
         - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
       responses:
         '200':
           description: OK
@@ -165,6 +167,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/fieldsOrgDevices'
         - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
       responses:
         '200':
           description: OK
@@ -277,6 +280,7 @@ paths:
         - $ref: '#/components/parameters/id'
         - $ref: '#/components/parameters/fieldsAppleCareCoverage'
         - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
       responses:
         '200':
           description: OK
@@ -689,6 +693,13 @@ components:
         maximum: 1000
         default: 100
       example: 50
+    cursor:
+      name: cursor
+      description: The value of the cursor for pagination.
+      in: query
+      schema:
+        type: string
+      example: NToxMToxNTkyMjU1OTcyMzUwOjE3NjM3NTI2NTM0NTM6ZmFsc2U6ZmFsc2U6MTc2Mzc1MjY1MTA0MA
     id:
       name: id
       description: The unique identifier for the resource.
