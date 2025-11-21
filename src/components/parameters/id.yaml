@@ -1,0 +1,7 @@
+name: id
+description: The unique identifier for the resource.
+in: path
+required: true
+schema:
+  type: string
+example: DVVS36G1YD3JKQNI

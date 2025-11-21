@@ -1,0 +1,20 @@
+name: fields[orgDeviceActivities]
+description: The fields to return for organization device activity information.
+in: query
+schema:
+  type: array
+  items:
+    type: string
+    enum:
+      - createdDateTime
+      - status
+      - subStatus
+      - completedDateTime
+      - downloadUrl
+  uniqueItems: true
+style: form
+explode: false
+example:
+  - createdDateTime
+  - status
+  - downloadUrl

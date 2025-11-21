@@ -1,0 +1,20 @@
+name: fields[mdmServers]
+description: The fields to return for device management service information.
+in: query
+schema:
+  type: array
+  items:
+    type: string
+    enum:
+      - serverName
+      - serverType
+      - createdDateTime
+      - updatedDateTime
+      - devices
+  uniqueItems: true
+style: form
+explode: false
+example:
+  - serverName
+  - serverType
+  - devices

@@ -1,0 +1,93 @@
+description: >
+  The data structure that represents an AppleCare Coverage resource that belongs to an organization device.
+  [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/applecarecoverage)
+type: object
+properties:
+  attributes:
+    description: >
+      Attributes for an organization device's AppleCare Coverage resource.
+      When additional attributes are added by Apple, they appear automatically, without requiring a newer version of the API.
+      [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/applecarecoverage/attributes-data.dictionary)
+    type: object
+    additionalProperties: true
+    properties:
+      status:
+        description: Strings that represent AppleCare Coverage status.
+        type: string
+        enum:
+          - ACTIVE
+          - INACTIVE
+        example: ACTIVE
+      paymentType:
+        description: Strings that represent AppleCare Coverage payment types.
+        type: string
+        enum:
+          - ABE_SUBSCRIPTION
+          - PAID_UP_FRONT
+          - SUBSCRIPTION
+          - NONE
+        example: ABE_SUBSCRIPTION
+      description:
+        description: Description of the device coverage.
+        type: string
+        example: AppleCare+ for Business Essentials
+      startDateTime:
+        description: >
+          UTC date when coverage period commenced. 
+          For AppleCare+ for Business Essentials, it's UTC date when a device enrolls into the plan. 
+        type: string
+        format: date-time
+        example: '2023-01-15T12:00:00Z'
+      endDateTime:
+        description: >
+          UTC date when coverage period ends for the device. 
+          This field isn't applicable for AppleCare+ for Business Essentials. 
+        type:
+          - string
+          - 'null'
+        format: date-time
+        example: '2025-01-15T12:00:00Z'
+      isRenewable:
+        description: >
+          Indicates whether coverage renews after endDateTime for the device. 
+          This field isn't applicable for Limited Warranty.
+        type: boolean
+        example: true
+      isCanceled:
+        description: >
+          Indicates whether coverage is canceled for the device.
+          This field isn't applicable for Limited Warranty and AppleCare+ for Business Essentials.
+        type: boolean
+        example: false
+      contractCancelDateTime:
+        description: >
+          UTC date when coverage was canceled for the device.
+          This field isn't applicable for Limited Warranty and AppleCare+ for Business Essentials.
+        type:
+          - string
+          - 'null'
+        format: date-time
+        example: '2024-06-30T12:00:00Z'
+      agreementNumber:
+        description: >
+          Agreement number associated with device coverage.
+          This field isn't applicable for Limited Warranty and AppleCare+ for Business Essentials.
+        type:
+          - string
+          - 'null'
+        example: '0000000001'
+  id:
+    description: The opaque resource ID that uniquely identifies the AppleCare Coverage.
+    type: string
+    example: '0000000001'
+  type:
+    description: >
+      The resource type label.
+      Can only be: appleCareCoverage
+    type: string
+    enum:
+      - appleCareCoverage
+    example: appleCareCoverage
+required:
+  - id
+  - type

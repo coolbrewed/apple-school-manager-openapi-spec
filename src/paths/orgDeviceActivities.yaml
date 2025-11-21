@@ -1,0 +1,154 @@
+post:
+  tags:
+    - orgDeviceActivities
+  summary: Assign or unassign devices to a device management services.
+  description: >
+    Assign or unassign devices to a device management service in an organization.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/create-an-orgdeviceactivity)
+  operationId: assignOrUnassignDevicesToMdmServer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            data:
+              description: The data for the activity request.
+              type: object
+              properties:
+                attributes:
+                  description: >
+                    Attributes with values that you're changing as part of the create request.
+                    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/attributes-data.dictionary)
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    activityType:
+                      description: The type of activity to do.
+                      type: string
+                      enum:
+                        - ASSIGN_DEVICES
+                        - UNASSIGN_DEVICES
+                      example: ASSIGN_DEVICES
+                  required:
+                    - activityType
+                relationships:
+                  description: The types and IDs of the related data to update.
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    devices:
+                      description: The devices to assign or unassign.
+                      type: object
+                      properties:
+                        data:
+                          description: A list of IDs with the paired resource type label that identify the related devices.
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                description: The opaque resource ID that uniquely identifies the device.
+                                type: string
+                                example: DVVS36G1YD3JKQNI
+                              type:
+                                description: >
+                                  The resource type label.
+                                  Can only be: orgDevices
+                                type: string
+                                enum:
+                                  - orgDevices
+                                example: orgDevices
+                      required:
+                        - data
+                    mdmServer:
+                      description: The device management service which the devices will be assigned to or unassigned from.
+                      type: object
+                      properties:
+                        data:
+                          description: The ID and resource type label pair that identifies the related device management service.
+                          type: object
+                          properties:
+                            id:
+                              description: The opaque resource ID that uniquely identifies the MDM server.
+                              type: string
+                              example: 1F97349736CF4614A94F624E705841AD
+                            type:
+                              description: >
+                                The resource type label.
+                                Can only be: mdmServers
+                              type: string
+                              enum:
+                                - mdmServers
+                              example: mdmServers
+                      required:
+                        - data
+                  required:
+                    - devices
+                    - mdmServer
+                type:
+                  description: >
+                    The resource type label. 
+                    Can only be: orgDeviceActivities
+                  type: string
+                  enum:
+                    - orgDeviceActivities
+                  example: orgDeviceActivities
+              required:
+                - attributes
+                - relationships
+                - type
+          required:
+            - data
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: ../components/schemas/orgDeviceActivity.yaml
+              links:
+                $ref: ../components/schemas/documentLinks.yaml
+            required:
+              - data
+              - links
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '409':
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '422':
+      description: Unprocessable Content
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '429':
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml

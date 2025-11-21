@@ -1,0 +1,65 @@
+get:
+  tags:
+    - orgDevices
+    - mdmServers
+  summary: Get assigned device management service ID for a device
+  description: >
+    Get the assigned device management service ID information for a device.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-id-for-an-orgdevice)
+  operationId: getOrgDeviceAssignedMdmServerId
+  parameters:
+    - $ref: ../components/parameters/id.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            description: The ID of the MDM server, with its resource type label.
+            type: object
+            properties:
+              id:
+                description: The opaque resource ID that uniquely identifies the MDM server.
+                type: string
+                example: 1F97349736CF4614A94F624E705841AD
+              type:
+                description: >
+                  The resource type label.
+                  Can only be: mdmServers
+                type: string
+                enum:
+                  - mdmServers
+                example: mdmServers
+            required:
+              - id
+              - type
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '429':
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml

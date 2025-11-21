@@ -1,0 +1,8 @@
+name: limit
+description: The number of included related resources to return.
+in: query
+schema:
+  type: integer
+  maximum: 1000
+  default: 100
+example: 50

@@ -1,0 +1,8 @@
+description: >
+  Links related to a resource, including self-links.
+  [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/resourcelinks)
+type: object
+additionalProperties: true
+properties:
+  self:
+    $ref: ./selfLink.yaml

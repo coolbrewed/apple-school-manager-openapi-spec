@@ -1,0 +1,5 @@
+description: A link that produces the current document or resource.
+type: string
+format: uri
+example: >-
+  https://api-school.apple.com/v1/orgDevices/XABC123X0ABC123X0

@@ -1,0 +1,56 @@
+get:
+  tags:
+    - orgDeviceActivities
+  summary: Get organization device activity
+  description: >
+    Get information for an organization device activity that a device management action, such as assigning or unassigning, creates.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdeviceactivity-information)
+  operationId: getOrgDeviceActivity
+  parameters:
+    - $ref: ../components/parameters/id.yaml
+    - $ref: ../components/parameters/fieldsOrgDeviceActivities.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: ../components/schemas/orgDeviceActivity.yaml
+              links:
+                $ref: ../components/schemas/documentLinks.yaml
+            required:
+              - data
+              - links
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '429':
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml

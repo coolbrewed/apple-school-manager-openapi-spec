@@ -1,0 +1,19 @@
+description: >
+  Links related to the response document, including paging links.
+  [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/pageddocumentlinks)
+type: object
+allOf:
+  - $ref: ./documentLinks.yaml
+  - type: object
+    additionalProperties: true
+    properties:
+      first:
+        description: The link to the first page of documents.
+        type: string
+        format: uri
+      next:
+        description: The link to the next page of documents.
+        type: string
+        format: uri
+        example: >-
+          https://api-school.apple.com/v1/orgDevices?cursor=MDowOjE3NDYxMTM4OTI1OTA6MTc0NjExMzg5MjU5MDp0cnVlOmZhbHNlOjE3NDYxMTM4OTI1OTA

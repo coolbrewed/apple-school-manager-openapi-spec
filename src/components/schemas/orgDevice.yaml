@@ -1,0 +1,177 @@
+description: >
+  The data structure that represents an organization device resource.
+  [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice)
+type: object
+properties:
+  attributes:
+    description: >
+      Attributes that describe an organization device resource.
+      When additional attributes are added by Apple, they appear automatically, without requiring a newer version of the API.
+      [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice/attributes-data.dictionary)
+    type: object
+    additionalProperties: true
+    properties:
+      addedToOrgDateTime:
+        description: The date and time of adding the device to an organization.
+        type: string
+        format: date-time
+        example: '2025-04-30T22:05:14.192Z'
+      releasedFromOrgDateTime:
+        description: >
+          The date and time the device was released from an organization. 
+          This will be null if the device has not been released.
+        type:
+          - string
+          - 'null'
+        format: date-time
+        example: '2025-06-01T15:33:54.164Z'
+      color:
+        description: The color of the device.
+        type: string
+        example: SILVER
+      deviceCapacity:
+        description: The capacity of the device.
+        type: string
+        example: 750GB
+      deviceModel:
+        description: The model name.
+        type: string
+        example: iMac 21.5"
+      eid:
+        description: The EID of the device (if available).
+        type: string
+        example: '89049037640158663184237812557346'
+      imei:
+        description: The IMEI(s) of the device (if available).
+        type: array
+        items:
+          type: string
+        example:
+          - '123456789012345'
+          - '123456789012346'
+      meid:
+        description: The MEID(s) of the device (if available).
+        type: array
+        items:
+          type: string
+        example:
+          - '123456789012347'
+      wifiMacAddress:
+        description: The Wi-FI MAC address(es) of the device.
+        # Unlike IMEI or MEID, this seems like it can be a single string or an array. An empty result returns an empty string.
+        oneOf:
+          - type: string
+            example: 00:1A:2B:3C:4D:5E
+          - type: array
+            items:
+              type: string
+            example:
+              - 00:1A:2B:3C:4D:5E
+      bluetoothMacAddress:
+        description: The Bluetooth MAC address(es) of the device.
+        # Unlike IMEI or MEID, this seems like it can be a single string or an array. An empty result returns an empty string.
+        oneOf:
+          - type: string
+            example: 00:1A:2B:3C:4D:5F
+          - type: array
+            items:
+              type: string
+            example:
+              - 00:1A:2B:3C:4D:5F
+      orderDateTime:
+        description: The date and time of placing the order for the device.
+        type: string
+        format: date-time
+        example: '2011-08-15T07:00:00Z'
+      orderNumber:
+        description: The order number of the device.
+        type: string
+        example: '1234567890'
+      partNumber:
+        description: The part number of the device.
+        type: string
+        example: FD311LL/A
+      productFamily:
+        description: The Apple product family of the device.
+        type: string
+        enum:
+          - iPhone
+          - iPad
+          - Mac
+          - AppleTV
+          - Watch
+          - Vision
+        example: Mac
+      productType:
+        description: The product type of the device.
+        type: string
+        example: iMac16,2
+      purchaseSourceType:
+        description: The purchase source type of the device.
+        type: string
+        enum:
+          - APPLE
+          - RESELLER
+          - MANUALLY_ADDED
+        example: APPLE
+      purchaseSourceId:
+        description: >
+          The unique ID of the purchase source type: Apple Customer Number or Reseller Number.
+        type: string
+        example: '-2085650007946880'
+      serialNumber:
+        description: The serial number of the device.
+        type: string
+      status:
+        description: >
+          The devices status: ASSIGNED or UNASSIGNED.
+          If ASSIGNED, use a separate API to get the information of the assigned server.
+        type: string
+        enum:
+          - ASSIGNED
+          - UNASSIGNED
+        example: UNASSIGNED
+      updatedDateTime:
+        description: The date and time of the most-recent update for the device.
+        type: string
+        format: date-time
+        example: '2025-05-01T15:33:54.164Z'
+  id:
+    description: The opaque resource ID that uniquely identifies the resource.
+    type: string
+    example: DVVS36G1YD3JKQNI
+  links:
+    $ref: ./resourceLinks.yaml
+  relationships:
+    description: Navigational links to related data and included resource types and IDs.
+    type: object
+    additionalProperties: true
+    properties:
+      assignedServer:
+        description: >
+          The relationship representing a device and its assigned device management service.
+          [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice/relationships-data.dictionary/assignedserver-data.dictionary)
+        type: object
+        properties:
+          links:
+            $ref: ./relationshipLinks.yaml
+      appleCareCoverage:
+        description: >
+          The relationship representing a device and its AppleCare Coverage.
+          [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice/relationships-data.dictionary/applecarecoverage-data.dictionary)
+        type: object
+        additionalProperties: true
+        properties:
+          links:
+            $ref: ./relationshipLinks.yaml
+  type:
+    description: >
+      The resource type label. 
+      Can only be: orgDevices
+    type: string
+    enum:
+      - orgDevices
+    example: orgDevices
+required:
+  - id
+  - type

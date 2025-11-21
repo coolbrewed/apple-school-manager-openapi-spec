@@ -1,0 +1,25 @@
+name: fields[appleCareCoverage]
+description: The fields to return for AppleCare Coverage information.
+in: query
+schema:
+  type: array
+  items:
+    type: string
+    enum:
+      - status
+      - paymentType
+      - description
+      - agreementNumber
+      - startDateTime
+      - endDateTime
+      - isRenewable
+      - isCanceled
+      - contractCancelDateTime
+  uniqueItems: true
+style: form
+explode: false
+example:
+  - status
+  - description
+  - startDateTime
+  - endDateTime

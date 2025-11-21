@@ -1,0 +1,106 @@
+description: >
+  The error details that an API returns in the response body whenever the API request isn't successful.
+  [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/errorresponse)
+type: object
+properties:
+  errors:
+    description: An array of one or more errors.
+    type: array
+    items:
+      description: >
+        The details about an error that returns when an API request isn't successful.
+        [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/errorresponse/errors-data.dictionary)
+      type: object
+      properties:
+        code:
+          description: >
+            A machine-readable code indicating the type of error. 
+            The code is a hierarchical value with levels of specificity separated by a period (.). 
+            This value is parseable for programmatic error handling in code.
+          type: string
+          example: NOT_FOUND
+        detail:
+          description: >
+            A detailed explanation of the error.
+            Don't use this field for programmatic error handling.
+          type: string
+          example: There is no resource of type 'orgDevices' with id 'XABC123X0ABC123X0'
+        id:
+          description: >
+            The unique ID of a specific instance of an error, request, and response. 
+            Use this ID when providing feedback to, or debugging issues with, Apple.
+          type: string
+          example: d41f0ce2-8e12-41b7-bffd-91fd628f6628
+        source:
+          description: >
+            One of two possible types of values — 
+            source.parameter when a query parameter produces the error, or 
+            source.pointer when a problem with the entity produces the error.
+          type: object
+          properties:
+            parameter:
+              description: The name of the query parameter that caused the error.
+              type: string
+            pointer:
+              description: A JSON pointer that indicates the location of the error in the request entity.
+              type: string
+          anyOf:
+            - required:
+                - parameter
+            - required:
+                - pointer
+        status:
+          description: >
+            The HTTP status code of the error. 
+            This status code usually matches the response's status code. 
+            However, if the request produces multiple errors, these two codes may differ.
+          type: string
+          example: '404'
+        title:
+          description: >
+            A summary of the error.
+            Don't use this field for programmatic error handling.
+          type: string
+          example: The specified resource doesn't exist
+        links:
+          description: >
+            @TODO: Not officially documented.
+          type: object
+          properties:
+            about:
+              description: >
+                @TODO: Not officially documented.
+              type: string
+              format: uri
+            associated:
+              description: >
+                @TODO: Not officially documented.
+              oneOf:
+                - type: string
+                  format: uri
+                - type: object
+                  properties:
+                    href:
+                      description: >
+                        @TODO: Not officially documented.
+                      type: string
+                      format: uri
+                    meta:
+                      description: >
+                        @TODO: Not officially documented.
+                      type: object
+                      properties:
+                        source:
+                          description: >
+                            @TODO: Not officially documented.
+                          type: string
+        meta:
+          description: >
+            @TODO: Not officially documented.
+          type: object
+          additionalProperties: true
+      required:
+        - code
+        - detail
+        - status
+        - title

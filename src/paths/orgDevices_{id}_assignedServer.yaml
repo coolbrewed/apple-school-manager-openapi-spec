@@ -1,0 +1,61 @@
+get:
+  tags:
+    - orgDevices
+    - mdmServers
+  summary: Get assigned device management service object for a device
+  description: >
+    Get the assigned device management service information for a device.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-information-for-an-orgdevice)
+  operationId: getOrgDeviceAssignedMdmServer
+  parameters:
+    - $ref: ../components/parameters/id.yaml
+    - $ref: ../components/parameters/fieldsMdmServers.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: ../components/schemas/mdmServer.yaml
+              included:
+                type: array
+                items:
+                  $ref: ../components/schemas/orgDevice.yaml
+              links:
+                $ref: ../components/schemas/documentLinks.yaml
+            required:
+              - data
+              - links
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml
+    '429':
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/error.yaml

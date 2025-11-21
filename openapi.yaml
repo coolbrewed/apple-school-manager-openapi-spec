@@ -1,0 +1,1370 @@
+openapi: 3.1.2
+info:
+  title: Apple School Manager API
+  description: API for managing Apple School Manager resources.
+  version: 0.1.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://api-school.apple.com/v1
+    description: Apple School Manager v1 API server
+security:
+  - bearerAuth: []
+tags:
+  - name: orgDevices
+    description: Organization devices
+  - name: appleCareCoverage
+    description: AppleCare coverage
+  - name: mdmServers
+    description: Management servers
+paths:
+  /mdmServers:
+    get:
+      tags:
+        - mdmServers
+      summary: Get the device management services.
+      description: |
+        Get a list of device management services in an organization. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-device-management-services)
+      operationId: getMdmServers
+      parameters:
+        - $ref: '#/components/parameters/fieldsMdmServers'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/mdmServer'
+                  included:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/orgDevice'
+                  links:
+                    $ref: '#/components/schemas/pagedDocumentLinks'
+                  meta:
+                    $ref: '#/components/schemas/pagingInformation'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /mdmServers/{id}/relationships/devices:
+    get:
+      tags:
+        - mdmServers
+      summary: Get device serial numbers for a device management service
+      description: |
+        Get a list of device serial numbers assigned to a device management service. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-all-device-ids-for-a-device-management-service)
+      operationId: getMdmServerDeviceSerialNumbers
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      description: The ID and resource type label for the device.
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        id:
+                          description: The opaque resource ID that uniquely identifies the device.
+                          type: string
+                          example: DVVS36G1YD3JKQNI
+                        type:
+                          description: |
+                            The resource type label.  Can only be: orgDevices
+                          type: string
+                          enum:
+                            - orgDevices
+                          example: orgDevices
+                      required:
+                        - id
+                        - type
+                  links:
+                    $ref: '#/components/schemas/pagedDocumentLinks'
+                  meta:
+                    $ref: '#/components/schemas/pagingInformation'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /orgDevices:
+    get:
+      tags:
+        - orgDevices
+      summary: Get organization devices
+      description: |
+        Get a list of devices in an organization that enroll using Automated Device Enrollment. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-org-devices)
+      operationId: getOrgDevices
+      parameters:
+        - $ref: '#/components/parameters/fieldsOrgDevices'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/orgDevice'
+                  links:
+                    $ref: '#/components/schemas/pagedDocumentLinks'
+                  meta:
+                    $ref: '#/components/schemas/pagingInformation'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /orgDevices/{id}:
+    get:
+      tags:
+        - orgDevices
+      summary: Get device information
+      description: |
+        Get information about a device in an organization. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdevice-information)
+      operationId: getOrgDevice
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/fieldsOrgDevices'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/orgDevice'
+                  links:
+                    $ref: '#/components/schemas/documentLinks'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /orgDevices/{id}/appleCareCoverage:
+    get:
+      tags:
+        - orgDevices
+        - appleCareCoverage
+      summary: Get AppleCare coverage for a device
+      description: |
+        Get AppleCare coverage information for a device in an organization. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-applecare-coverage-for-a-device)
+      operationId: getOrgDeviceAppleCareCoverage
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/fieldsAppleCareCoverage'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/appleCareCoverage'
+                  links:
+                    $ref: '#/components/schemas/pagedDocumentLinks'
+                  meta:
+                    $ref: '#/components/schemas/pagingInformation'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /orgDevices/{id}/assignedServer:
+    get:
+      tags:
+        - orgDevices
+        - mdmServers
+      summary: Get assigned device management service object for a device
+      description: |
+        Get the assigned device management service information for a device. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-information-for-an-orgdevice)
+      operationId: getOrgDeviceAssignedMdmServer
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/fieldsMdmServers'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/mdmServer'
+                  included:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/orgDevice'
+                  links:
+                    $ref: '#/components/schemas/documentLinks'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /orgDevices/{id}/relationships/assignedServer:
+    get:
+      tags:
+        - orgDevices
+        - mdmServers
+      summary: Get assigned device management service ID for a device
+      description: |
+        Get the assigned device management service ID information for a device. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-id-for-an-orgdevice)
+      operationId: getOrgDeviceAssignedMdmServerId
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: The ID of the MDM server, with its resource type label.
+                type: object
+                properties:
+                  id:
+                    description: The opaque resource ID that uniquely identifies the MDM server.
+                    type: string
+                    example: 1F97349736CF4614A94F624E705841AD
+                  type:
+                    description: |
+                      The resource type label. Can only be: mdmServers
+                    type: string
+                    enum:
+                      - mdmServers
+                    example: mdmServers
+                required:
+                  - id
+                  - type
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /orgDeviceActivities:
+    post:
+      tags:
+        - orgDeviceActivities
+      summary: Assign or unassign devices to a device management services.
+      description: |
+        Assign or unassign devices to a device management service in an organization. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/create-an-orgdeviceactivity)
+      operationId: assignOrUnassignDevicesToMdmServer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  description: The data for the activity request.
+                  type: object
+                  properties:
+                    attributes:
+                      description: |
+                        Attributes with values that you're changing as part of the create request. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/attributes-data.dictionary)
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        activityType:
+                          description: The type of activity to do.
+                          type: string
+                          enum:
+                            - ASSIGN_DEVICES
+                            - UNASSIGN_DEVICES
+                          example: ASSIGN_DEVICES
+                      required:
+                        - activityType
+                    relationships:
+                      description: The types and IDs of the related data to update.
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        devices:
+                          description: The devices to assign or unassign.
+                          type: object
+                          properties:
+                            data:
+                              description: A list of IDs with the paired resource type label that identify the related devices.
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    description: The opaque resource ID that uniquely identifies the device.
+                                    type: string
+                                    example: DVVS36G1YD3JKQNI
+                                  type:
+                                    description: |
+                                      The resource type label. Can only be: orgDevices
+                                    type: string
+                                    enum:
+                                      - orgDevices
+                                    example: orgDevices
+                          required:
+                            - data
+                        mdmServer:
+                          description: The device management service which the devices will be assigned to or unassigned from.
+                          type: object
+                          properties:
+                            data:
+                              description: The ID and resource type label pair that identifies the related device management service.
+                              type: object
+                              properties:
+                                id:
+                                  description: The opaque resource ID that uniquely identifies the MDM server.
+                                  type: string
+                                  example: 1F97349736CF4614A94F624E705841AD
+                                type:
+                                  description: |
+                                    The resource type label. Can only be: mdmServers
+                                  type: string
+                                  enum:
+                                    - mdmServers
+                                  example: mdmServers
+                          required:
+                            - data
+                      required:
+                        - devices
+                        - mdmServer
+                    type:
+                      description: |
+                        The resource type label.  Can only be: orgDeviceActivities
+                      type: string
+                      enum:
+                        - orgDeviceActivities
+                      example: orgDeviceActivities
+                  required:
+                    - attributes
+                    - relationships
+                    - type
+              required:
+                - data
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/orgDeviceActivity'
+                  links:
+                    $ref: '#/components/schemas/documentLinks'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /orgDeviceActivities/{id}:
+    get:
+      tags:
+        - orgDeviceActivities
+      summary: Get organization device activity
+      description: |
+        Get information for an organization device activity that a device management action, such as assigning or unassigning, creates. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdeviceactivity-information)
+      operationId: getOrgDeviceActivity
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/fieldsOrgDeviceActivities'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/orgDeviceActivity'
+                  links:
+                    $ref: '#/components/schemas/documentLinks'
+                required:
+                  - data
+                  - links
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  securitySchemes:
+    bearerAuth:
+      description: |
+        The Apple School Manager API requires an access token produced by a custom OAuth 2.0 authentication flow. [Learn more](https://developer.apple.com/documentation/apple-school-and-business-manager-api/implementing-oauth-for-the-apple-school-and-business-manager-api)
+      type: http
+      scheme: bearer
+  parameters:
+    fieldsMdmServers:
+      name: fields[mdmServers]
+      description: The fields to return for device management service information.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - serverName
+            - serverType
+            - createdDateTime
+            - updatedDateTime
+            - devices
+        uniqueItems: true
+      style: form
+      explode: false
+      example:
+        - serverName
+        - serverType
+        - devices
+    limit:
+      name: limit
+      description: The number of included related resources to return.
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      example: 50
+    id:
+      name: id
+      description: The unique identifier for the resource.
+      in: path
+      required: true
+      schema:
+        type: string
+      example: DVVS36G1YD3JKQNI
+    fieldsOrgDevices:
+      name: fields[orgDevices]
+      description: The fields to return for device information.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - serialNumber
+            - addedToOrgDateTime
+            - releasedFromOrgDateTime
+            - updatedDateTime
+            - deviceModel
+            - productFamily
+            - productType
+            - deviceCapacity
+            - partNumber
+            - orderNumber
+            - color
+            - status
+            - orderDateTime
+            - imei
+            - meid
+            - eid
+            - wifiMacAddress
+            - bluetoothMacAddress
+            - purchaseSourceId
+            - purchaseSourceType
+            - assignedServer
+            - appleCareCoverage
+        uniqueItems: true
+      style: form
+      explode: false
+      example:
+        - serialNumber
+        - deviceModel
+        - status
+    fieldsAppleCareCoverage:
+      name: fields[appleCareCoverage]
+      description: The fields to return for AppleCare Coverage information.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - status
+            - paymentType
+            - description
+            - agreementNumber
+            - startDateTime
+            - endDateTime
+            - isRenewable
+            - isCanceled
+            - contractCancelDateTime
+        uniqueItems: true
+      style: form
+      explode: false
+      example:
+        - status
+        - description
+        - startDateTime
+        - endDateTime
+    fieldsOrgDeviceActivities:
+      name: fields[orgDeviceActivities]
+      description: The fields to return for organization device activity information.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - createdDateTime
+            - status
+            - subStatus
+            - completedDateTime
+            - downloadUrl
+        uniqueItems: true
+      style: form
+      explode: false
+      example:
+        - createdDateTime
+        - status
+        - downloadUrl
+  schemas:
+    selfLink:
+      description: A link that produces the current document or resource.
+      type: string
+      format: uri
+      example: https://api-school.apple.com/v1/orgDevices/XABC123X0ABC123X0
+    relationshipLinks:
+      description: |
+        Links related to a response document, including self-links. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/relationshiplinks)
+      type: object
+      additionalProperties: true
+      properties:
+        include:
+          description: |
+            @TODO: Not officially documented.
+          type: string
+          format: uri
+        related:
+          description: The link to the related documents.
+          type: string
+          format: uri
+          example: https://api-school.apple.com/v1/orgDevices/XABC123X0ABC123X0/assignedServer
+        self:
+          $ref: '#/components/schemas/selfLink'
+    pagingInformation:
+      description: |
+        Paging information for data responses. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/paginginformation)
+      type: object
+      properties:
+        paging:
+          description: |
+            Paging details, such as the total number of resources and the per-page limit. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/paginginformation/paging-data.dictionary)
+          type: object
+          additionalProperties: true
+          properties:
+            limit:
+              description: The maximum number of resources to return per page.
+              type: integer
+              format: int32
+              example: 100
+            nextCursor:
+              description: The cursor to use for the next request, in case of pagination.
+              type: string
+              example: MDowOjE3NDYxMTM4OTI1OTA6MTc0NjExMzg5MjU5MDp0cnVlOmZhbHNlOjE3NDYxMTM4OTI1OTA
+            total:
+              description: The total number of resources to return.
+              type: integer
+              format: int32
+          required:
+            - limit
+      required:
+        - paging
+    mdmServer:
+      description: |
+        The data structure that represents device management services in organizations. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/mdmserver)
+      type: object
+      properties:
+        attributes:
+          description: |
+            Attributes that describe a device management service resource. You can add new attributes to a resource without a newer version of an API. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/mdmserver/attributes-data.dictionary)
+          type: object
+          additionalProperties: true
+          properties:
+            createdDateTime:
+              description: The date and time of the creation of the resource.
+              type: string
+              format: date-time
+              example: '2025-05-01T03:21:44.685Z'
+            serverName:
+              description: The device management service's name.
+              type: string
+              example: Test Device Management Service
+            serverType:
+              description: The type of device management service.
+              type: string
+              enum:
+                - MDM
+                - APPLE_CONFIGURATOR
+                - APPLE_MDM
+              example: APPLE_CONFIGURATOR
+            updatedDateTime:
+              description: The date and time of the most-recent update for the resource.
+              type: string
+              format: date-time
+              example: '2025-05-01T03:21:46.284Z'
+        id:
+          description: The opaque resource ID that uniquely identifies the device management service.
+          type: string
+          example: 1F97349736CF4614A94F624E705841AD
+        relationships:
+          description: Navigational links to related data and included resource types and IDs.
+          type: object
+          additionalProperties: true
+          properties:
+            devices:
+              description: Relationships representing devices in device management services.
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    description: The ID and resource type label for a device.
+                    type: object
+                    properties:
+                      id:
+                        description: The opaque resource ID that uniquely identifies the device.
+                        type: string
+                        example: DVVS36G1YD3JKQNI
+                      type:
+                        description: |
+                          The resource type label. Can only be: orgDevices
+                        type: string
+                        enum:
+                          - orgDevices
+                        example: orgDevices
+                    required:
+                      - id
+                      - type
+                links:
+                  $ref: '#/components/schemas/relationshipLinks'
+                meta:
+                  $ref: '#/components/schemas/pagingInformation'
+        type:
+          description: |
+            The resource type label. Can only be: mdmServers
+          type: string
+          enum:
+            - mdmServers
+          example: mdmServers
+      required:
+        - id
+        - type
+    resourceLinks:
+      description: |
+        Links related to a resource, including self-links. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/resourcelinks)
+      type: object
+      additionalProperties: true
+      properties:
+        self:
+          $ref: '#/components/schemas/selfLink'
+    orgDevice:
+      description: |
+        The data structure that represents an organization device resource. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice)
+      type: object
+      properties:
+        attributes:
+          description: |
+            Attributes that describe an organization device resource. When additional attributes are added by Apple, they appear automatically, without requiring a newer version of the API. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice/attributes-data.dictionary)
+          type: object
+          additionalProperties: true
+          properties:
+            addedToOrgDateTime:
+              description: The date and time of adding the device to an organization.
+              type: string
+              format: date-time
+              example: '2025-04-30T22:05:14.192Z'
+            releasedFromOrgDateTime:
+              description: |
+                The date and time the device was released from an organization.  This will be null if the device has not been released.
+              type:
+                - string
+                - 'null'
+              format: date-time
+              example: '2025-06-01T15:33:54.164Z'
+            color:
+              description: The color of the device.
+              type: string
+              example: SILVER
+            deviceCapacity:
+              description: The capacity of the device.
+              type: string
+              example: 750GB
+            deviceModel:
+              description: The model name.
+              type: string
+              example: iMac 21.5"
+            eid:
+              description: The EID of the device (if available).
+              type: string
+              example: '89049037640158663184237812557346'
+            imei:
+              description: The IMEI(s) of the device (if available).
+              type: array
+              items:
+                type: string
+              example:
+                - '123456789012345'
+                - '123456789012346'
+            meid:
+              description: The MEID(s) of the device (if available).
+              type: array
+              items:
+                type: string
+              example:
+                - '123456789012347'
+            wifiMacAddress:
+              description: The Wi-FI MAC address(es) of the device.
+              oneOf:
+                - type: string
+                  example: 00:1A:2B:3C:4D:5E
+                - type: array
+                  items:
+                    type: string
+                  example:
+                    - 00:1A:2B:3C:4D:5E
+            bluetoothMacAddress:
+              description: The Bluetooth MAC address(es) of the device.
+              oneOf:
+                - type: string
+                  example: 00:1A:2B:3C:4D:5F
+                - type: array
+                  items:
+                    type: string
+                  example:
+                    - 00:1A:2B:3C:4D:5F
+            orderDateTime:
+              description: The date and time of placing the order for the device.
+              type: string
+              format: date-time
+              example: '2011-08-15T07:00:00Z'
+            orderNumber:
+              description: The order number of the device.
+              type: string
+              example: '1234567890'
+            partNumber:
+              description: The part number of the device.
+              type: string
+              example: FD311LL/A
+            productFamily:
+              description: The Apple product family of the device.
+              type: string
+              enum:
+                - iPhone
+                - iPad
+                - Mac
+                - AppleTV
+                - Watch
+                - Vision
+              example: Mac
+            productType:
+              description: The product type of the device.
+              type: string
+              example: iMac16,2
+            purchaseSourceType:
+              description: The purchase source type of the device.
+              type: string
+              enum:
+                - APPLE
+                - RESELLER
+                - MANUALLY_ADDED
+              example: APPLE
+            purchaseSourceId:
+              description: |
+                The unique ID of the purchase source type: Apple Customer Number or Reseller Number.
+              type: string
+              example: '-2085650007946880'
+            serialNumber:
+              description: The serial number of the device.
+              type: string
+            status:
+              description: |
+                The devices status: ASSIGNED or UNASSIGNED. If ASSIGNED, use a separate API to get the information of the assigned server.
+              type: string
+              enum:
+                - ASSIGNED
+                - UNASSIGNED
+              example: UNASSIGNED
+            updatedDateTime:
+              description: The date and time of the most-recent update for the device.
+              type: string
+              format: date-time
+              example: '2025-05-01T15:33:54.164Z'
+        id:
+          description: The opaque resource ID that uniquely identifies the resource.
+          type: string
+          example: DVVS36G1YD3JKQNI
+        links:
+          $ref: '#/components/schemas/resourceLinks'
+        relationships:
+          description: Navigational links to related data and included resource types and IDs.
+          type: object
+          additionalProperties: true
+          properties:
+            assignedServer:
+              description: |
+                The relationship representing a device and its assigned device management service. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice/relationships-data.dictionary/assignedserver-data.dictionary)
+              type: object
+              properties:
+                links:
+                  $ref: '#/components/schemas/relationshipLinks'
+            appleCareCoverage:
+              description: |
+                The relationship representing a device and its AppleCare Coverage. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdevice/relationships-data.dictionary/applecarecoverage-data.dictionary)
+              type: object
+              additionalProperties: true
+              properties:
+                links:
+                  $ref: '#/components/schemas/relationshipLinks'
+        type:
+          description: |
+            The resource type label.  Can only be: orgDevices
+          type: string
+          enum:
+            - orgDevices
+          example: orgDevices
+      required:
+        - id
+        - type
+    documentLinks:
+      description: |
+        Self-links to documents that can contain information for one or more resources. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/documentlinks)
+      type: object
+      additionalProperties: true
+      properties:
+        self:
+          $ref: '#/components/schemas/selfLink'
+      required:
+        - self
+    pagedDocumentLinks:
+      description: |
+        Links related to the response document, including paging links. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/pageddocumentlinks)
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/documentLinks'
+        - type: object
+          additionalProperties: true
+          properties:
+            first:
+              description: The link to the first page of documents.
+              type: string
+              format: uri
+            next:
+              description: The link to the next page of documents.
+              type: string
+              format: uri
+              example: https://api-school.apple.com/v1/orgDevices?cursor=MDowOjE3NDYxMTM4OTI1OTA6MTc0NjExMzg5MjU5MDp0cnVlOmZhbHNlOjE3NDYxMTM4OTI1OTA
+    error:
+      description: |
+        The error details that an API returns in the response body whenever the API request isn't successful. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/errorresponse)
+      type: object
+      properties:
+        errors:
+          description: An array of one or more errors.
+          type: array
+          items:
+            description: |
+              The details about an error that returns when an API request isn't successful. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/errorresponse/errors-data.dictionary)
+            type: object
+            properties:
+              code:
+                description: |
+                  A machine-readable code indicating the type of error.  The code is a hierarchical value with levels of specificity separated by a period (.).  This value is parseable for programmatic error handling in code.
+                type: string
+                example: NOT_FOUND
+              detail:
+                description: |
+                  A detailed explanation of the error. Don't use this field for programmatic error handling.
+                type: string
+                example: There is no resource of type 'orgDevices' with id 'XABC123X0ABC123X0'
+              id:
+                description: |
+                  The unique ID of a specific instance of an error, request, and response.  Use this ID when providing feedback to, or debugging issues with, Apple.
+                type: string
+                example: d41f0ce2-8e12-41b7-bffd-91fd628f6628
+              source:
+                description: |
+                  One of two possible types of values —  source.parameter when a query parameter produces the error, or  source.pointer when a problem with the entity produces the error.
+                type: object
+                properties:
+                  parameter:
+                    description: The name of the query parameter that caused the error.
+                    type: string
+                  pointer:
+                    description: A JSON pointer that indicates the location of the error in the request entity.
+                    type: string
+                anyOf:
+                  - required:
+                      - parameter
+                  - required:
+                      - pointer
+              status:
+                description: |
+                  The HTTP status code of the error.  This status code usually matches the response's status code.  However, if the request produces multiple errors, these two codes may differ.
+                type: string
+                example: '404'
+              title:
+                description: |
+                  A summary of the error. Don't use this field for programmatic error handling.
+                type: string
+                example: The specified resource doesn't exist
+              links:
+                description: |
+                  @TODO: Not officially documented.
+                type: object
+                properties:
+                  about:
+                    description: |
+                      @TODO: Not officially documented.
+                    type: string
+                    format: uri
+                  associated:
+                    description: |
+                      @TODO: Not officially documented.
+                    oneOf:
+                      - type: string
+                        format: uri
+                      - type: object
+                        properties:
+                          href:
+                            description: |
+                              @TODO: Not officially documented.
+                            type: string
+                            format: uri
+                          meta:
+                            description: |
+                              @TODO: Not officially documented.
+                            type: object
+                            properties:
+                              source:
+                                description: |
+                                  @TODO: Not officially documented.
+                                type: string
+              meta:
+                description: |
+                  @TODO: Not officially documented.
+                type: object
+                additionalProperties: true
+            required:
+              - code
+              - detail
+              - status
+              - title
+    appleCareCoverage:
+      description: |
+        The data structure that represents an AppleCare Coverage resource that belongs to an organization device. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/applecarecoverage)
+      type: object
+      properties:
+        attributes:
+          description: |
+            Attributes for an organization device's AppleCare Coverage resource. When additional attributes are added by Apple, they appear automatically, without requiring a newer version of the API. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/applecarecoverage/attributes-data.dictionary)
+          type: object
+          additionalProperties: true
+          properties:
+            status:
+              description: Strings that represent AppleCare Coverage status.
+              type: string
+              enum:
+                - ACTIVE
+                - INACTIVE
+              example: ACTIVE
+            paymentType:
+              description: Strings that represent AppleCare Coverage payment types.
+              type: string
+              enum:
+                - ABE_SUBSCRIPTION
+                - PAID_UP_FRONT
+                - SUBSCRIPTION
+                - NONE
+              example: ABE_SUBSCRIPTION
+            description:
+              description: Description of the device coverage.
+              type: string
+              example: AppleCare+ for Business Essentials
+            startDateTime:
+              description: |
+                UTC date when coverage period commenced.  For AppleCare+ for Business Essentials, it's UTC date when a device enrolls into the plan. 
+              type: string
+              format: date-time
+              example: '2023-01-15T12:00:00Z'
+            endDateTime:
+              description: |
+                UTC date when coverage period ends for the device.  This field isn't applicable for AppleCare+ for Business Essentials. 
+              type:
+                - string
+                - 'null'
+              format: date-time
+              example: '2025-01-15T12:00:00Z'
+            isRenewable:
+              description: |
+                Indicates whether coverage renews after endDateTime for the device.  This field isn't applicable for Limited Warranty.
+              type: boolean
+              example: true
+            isCanceled:
+              description: |
+                Indicates whether coverage is canceled for the device. This field isn't applicable for Limited Warranty and AppleCare+ for Business Essentials.
+              type: boolean
+              example: false
+            contractCancelDateTime:
+              description: |
+                UTC date when coverage was canceled for the device. This field isn't applicable for Limited Warranty and AppleCare+ for Business Essentials.
+              type:
+                - string
+                - 'null'
+              format: date-time
+              example: '2024-06-30T12:00:00Z'
+            agreementNumber:
+              description: |
+                Agreement number associated with device coverage. This field isn't applicable for Limited Warranty and AppleCare+ for Business Essentials.
+              type:
+                - string
+                - 'null'
+              example: '0000000001'
+        id:
+          description: The opaque resource ID that uniquely identifies the AppleCare Coverage.
+          type: string
+          example: '0000000001'
+        type:
+          description: |
+            The resource type label. Can only be: appleCareCoverage
+          type: string
+          enum:
+            - appleCareCoverage
+          example: appleCareCoverage
+      required:
+        - id
+        - type
+    orgDeviceActivity:
+      description: |
+        The data structure that represents an organization device activity resource. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivity)
+      type: object
+      properties:
+        attributes:
+          description: |
+            Attributes that describe an organization device activity resource. You can add new attributes to a resource without a newer version of an API. [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivity/attributes-data.dictionary)
+          type: object
+          additionalProperties: true
+          properties:
+            createdDateTime:
+              description: The date and time of the creation of organization device activity.
+              type: string
+              format: date-time
+              example: '2025-05-05T04:15:43.282Z'
+            status:
+              description: The top-level status of an activity.
+              type: string
+              enum:
+                - COMPLETED
+                - IN_PROGRESS
+                - STOPPED
+                - FAILED
+              example: IN_PROGRESS
+            subStatus:
+              description: The low-level status of an activity.
+              type: string
+              enum:
+                - SUBMITTED
+                - PRE_PROCESSING
+                - PENDING
+                - PROCESSING
+                - POST_PROCESSING
+                - STOPPING
+                - COMPLETED_WITH_SUCCESS
+                - COMPLETED_WITH_ERROR
+                - COMPLETED_WITH_FAILURE
+                - COMPLETED_POST_PROCESSING_FAILED
+              example: SUBMITTED
+            completedDateTime:
+              description: |
+                The date and time of the completion of organization device activity.  This is available only when an activity is in a COMPLETED status.
+              type:
+                - string
+                - 'null'
+              format: date-time
+              example: '2025-05-05T04:17:43.282Z'
+            downloadUrl:
+              description: |
+                A presigned URL for downloading activity logs in a CSV format.  This is available only when an activity is in a COMPLETED status.
+              type:
+                - string
+                - 'null'
+              format: uri
+        id:
+          description: The opaque resource ID that uniquely identifies the resource.
+          type: string
+          example: b1481656-b267-480d-b284-a809eed8b041
+        links:
+          $ref: '#/components/schemas/resourceLinks'
+        type:
+          description: 'The resource type label. Can only be: orgDeviceActivities'
+          type: string
+          enum:
+            - orgDeviceActivities
+          example: orgDeviceActivities
+      required:
+        - id
+        - type
