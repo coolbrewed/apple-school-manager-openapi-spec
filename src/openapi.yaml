@@ -2,7 +2,7 @@ openapi: 3.1.2
 info:
   title: Apple School Manager API
   description: API for managing Apple School Manager resources.
-  version: 0.1.0
+  version: 1.0.0
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -13,11 +13,11 @@ security:
   - bearerAuth: []
 tags:
   - name: orgDevices
-    description: Organization devices
-  - name: appleCareCoverage
-    description: AppleCare coverage
+    description: Operations related to organization devices.
+  - name: orgDeviceActivities
+    description: Operations related to organization device activities.
   - name: mdmServers
-    description: Management servers
+    description: Operations related to device management services.
 paths:
   /mdmServers:
     $ref: paths/mdmServers.yaml

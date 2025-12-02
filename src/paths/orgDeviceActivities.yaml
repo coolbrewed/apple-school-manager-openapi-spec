@@ -117,38 +117,14 @@ post:
               - data
               - links
     '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/badRequest.yaml
     '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/unauthorized.yaml
     '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/forbidden.yaml
     '409':
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/conflict.yaml
     '422':
-      description: Unprocessable Content
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/unprocessableContent.yaml
     '429':
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/tooManyRequests.yaml

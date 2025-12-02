@@ -1,7 +1,6 @@
 get:
   tags:
     - orgDevices
-    - appleCareCoverage
   summary: Get AppleCare coverage for a device
   description: >
     Get AppleCare coverage information for a device in an organization.
@@ -32,26 +31,10 @@ get:
               - data
               - links
     '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/badRequest.yaml
     '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/unauthorized.yaml
     '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/forbidden.yaml
     '429':
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/tooManyRequests.yaml

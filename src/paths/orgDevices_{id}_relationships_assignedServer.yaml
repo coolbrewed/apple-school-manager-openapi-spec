@@ -1,10 +1,9 @@
 get:
   tags:
     - orgDevices
-    - mdmServers
   summary: Get assigned device management service ID for a device
   description: >
-    Get the assigned device management service ID information for a device.
+    Get the assigned device management service ID for a device.
     [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-id-for-an-orgdevice)
   operationId: getOrgDeviceAssignedMdmServerId
   parameters:
@@ -34,32 +33,12 @@ get:
               - id
               - type
     '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/badRequest.yaml
     '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/unauthorized.yaml
     '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/forbidden.yaml
     '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/notFound.yaml
     '429':
-      description: Too Many Requests
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/error.yaml
+      $ref: ../components/responses/tooManyRequests.yaml
