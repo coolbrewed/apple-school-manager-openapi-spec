@@ -1,0 +1,57 @@
+get:
+  summary: Get device serial numbers for a device management service
+  description: >
+    Get a list of device serial numbers assigned to a device management service.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-all-device-ids-for-a-device-management-service)
+  operationId: getMdmServerDeviceSerialNumbers
+  tags:
+    - mdmServers
+  responses:
+    '200':
+      description: OK
+      schema:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              description: The ID and resource type label for the device.
+              type: object
+              additionalProperties: true
+              properties:
+                id:
+                  description: The opaque resource ID that uniquely identifies the device.
+                  type: string
+                  example: DVVS36G1YD3JKQNI
+                type:
+                  description: >
+                    The resource type label.
+                    Can only be: orgDevices
+                  type: string
+                  enum:
+                    - orgDevices
+                  example: orgDevices
+              required:
+                - id
+                - type
+          links:
+            $ref: ../definitions/pagedDocumentLinks.yaml
+          meta:
+            $ref: ../definitions/pagingInformation.yaml
+        required:
+          - data
+          - links
+    '400':
+      $ref: ../responses/badRequest.yaml
+    '401':
+      $ref: ../responses/unauthorized.yaml
+    '403':
+      $ref: ../responses/forbidden.yaml
+    '404':
+      $ref: ../responses/notFound.yaml
+    '429':
+      $ref: ../responses/tooManyRequests.yaml
+  parameters:
+    - $ref: ../parameters/id.yaml
+    - $ref: ../parameters/limit.yaml
+    - $ref: ../parameters/cursor.yaml

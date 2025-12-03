@@ -1,0 +1,15 @@
+name: fields[orgDeviceActivities]
+in: query
+description: A comma-separated list of the fields to include for organization device activities.
+required: false
+type: array
+collectionFormat: csv
+uniqueItems: true
+items:
+  type: string
+  enum:
+    - createdDateTime
+    - status
+    - subStatus
+    - completedDateTime
+    - downloadUrl

@@ -1,0 +1,41 @@
+get:
+  summary: Get the device management services.
+  description: >
+    Get a list of device management services in an organization. 
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-device-management-services)
+  operationId: getMdmServers
+  tags:
+    - mdmServers
+  responses:
+    '200':
+      description: OK
+      schema:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: ../definitions/mdmServer.yaml
+          included:
+            type: array
+            items:
+              $ref: ../definitions/orgDevice.yaml
+          links:
+            $ref: ../definitions/pagedDocumentLinks.yaml
+          meta:
+            $ref: ../definitions/pagingInformation.yaml
+        required:
+          - data
+          - links
+    '400':
+      $ref: ../responses/badRequest.yaml
+    '401':
+      $ref: ../responses/unauthorized.yaml
+    '403':
+      $ref: ../responses/forbidden.yaml
+    '429':
+      $ref: ../responses/tooManyRequests.yaml
+  parameters:
+    - $ref: ../parameters/fieldsMdmServers.yaml
+    - $ref: ../parameters/limit.yaml
+    - $ref: ../parameters/cursor.yaml

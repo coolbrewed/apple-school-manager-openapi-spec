@@ -1,0 +1,39 @@
+get:
+  summary: Get assigned device management service object for a device
+  description: >
+    Get the assigned device management service information for a device.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-information-for-an-orgdevice)
+  operationId: getOrgDeviceAssignedMdmServer
+  tags:
+    - orgDevices
+    - mdmServers
+  responses:
+    '200':
+      description: OK
+      schema:
+        type: object
+        properties:
+          data:
+            $ref: ../definitions/mdmServer.yaml
+          included:
+            type: array
+            items:
+              $ref: ../definitions/orgDevice.yaml
+          links:
+            $ref: ../definitions/documentLinks.yaml
+        required:
+          - data
+          - links
+    '400':
+      $ref: ../responses/badRequest.yaml
+    '401':
+      $ref: ../responses/unauthorized.yaml
+    '403':
+      $ref: ../responses/forbidden.yaml
+    '404':
+      $ref: ../responses/notFound.yaml
+    '429':
+      $ref: ../responses/tooManyRequests.yaml
+  parameters:
+    - $ref: ../parameters/id.yaml
+    - $ref: ../parameters/fieldsMdmServers.yaml

@@ -1,0 +1,57 @@
+swagger: '2.0'
+
+info:
+  title: Apple School Manager API
+  description: API for managing Apple School Manager resources.
+  version: 0.1.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+host: api-school.apple.com
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+      The Apple School Manager API requires an access token produced by a custom OAuth 2.0 authentication flow.
+      [Learn more](https://developer.apple.com/documentation/apple-school-and-business-manager-api/implementing-oauth-for-the-apple-school-and-business-manager-api)
+security:
+  - bearerAuth: []
+
+tags:
+  - name: orgDevices
+    description: Operations related to organization devices.
+  - name: mdmServers
+    description: Operations related to MDM servers.
+  - name: orgActivities
+    description: Operations related to organization activities.
+
+paths:
+  /mdmServers:
+    $ref: ./paths/mdmServers.yaml
+  /mdmServers/{id}/relationships/devices:
+    $ref: ./paths/mdmServers_{id}_relationships_devices.yaml
+  /orgDevices:
+    $ref: ./paths/orgDevices.yaml
+  /orgDevices/{id}:
+    $ref: ./paths/orgDevices_{id}.yaml
+  /orgDevices/{id}/appleCareCoverage:
+    $ref: ./paths/orgDevices_{id}_appleCareCoverage.yaml
+  /orgDevices/{id}/assignedServer:
+    $ref: ./paths/orgDevices_{id}_assignedServer.yaml
+  /orgDevices/{id}/relationships/assignedServer:
+    $ref: ./paths/orgDevices_{id}_relationships_assignedServer.yaml
+  /orgDeviceActivities:
+    $ref: ./paths/orgDeviceActivities.yaml
+  /orgDeviceActivities/{id}:
+    $ref: ./paths/orgDeviceActivities_{id}.yaml

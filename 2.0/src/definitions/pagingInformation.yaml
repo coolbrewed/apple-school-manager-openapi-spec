@@ -1,0 +1,30 @@
+description: >
+  Paging information for data responses.
+  [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/paginginformation)
+type: object
+properties:
+  paging:
+    description: >
+      Paging details, such as the total number of resources and the per-page limit.
+      [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/paginginformation/paging-data.dictionary)
+    type: object
+    additionalProperties: true
+    properties:
+      limit:
+        description: The maximum number of resources to return per page.
+        type: integer
+        format: int32
+        example: 100
+      nextCursor:
+        description: The cursor to use for the next request, in case of pagination.
+        type: string
+        example: >-
+          MDowOjE3NDYxMTM4OTI1OTA6MTc0NjExMzg5MjU5MDp0cnVlOmZhbHNlOjE3NDYxMTM4OTI1OTA
+      total:
+        description: The total number of resources to return.
+        type: integer
+        format: int32
+    required:
+      - limit
+required:
+  - paging

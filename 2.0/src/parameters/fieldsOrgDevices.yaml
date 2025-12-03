@@ -1,0 +1,32 @@
+name: fields[orgDevices]
+in: query
+description: A comma-separated list of the fields to include for organization devices.
+required: false
+type: array
+collectionFormat: csv
+uniqueItems: true
+items:
+  type: string
+  enum:
+    - serialNumber
+    - addedToOrgDateTime
+    - releasedFromOrgDateTime
+    - updatedDateTime
+    - deviceModel
+    - productFamily
+    - productType
+    - deviceCapacity
+    - partNumber
+    - orderNumber
+    - color
+    - status
+    - orderDateTime
+    - imei
+    - meid
+    - eid
+    - wifiMacAddress
+    - bluetoothMacAddress
+    - purchaseSourceId
+    - purchaseSourceType
+    - assignedServer
+    - appleCareCoverage

@@ -1,0 +1,4 @@
+description: Bad Request
+schema:
+  $ref: ../definitions/error.yaml
+    

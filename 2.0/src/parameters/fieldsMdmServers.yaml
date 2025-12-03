@@ -1,0 +1,15 @@
+name: fields[mdmServers]
+in: query
+description: A comma-separated list of the fields to include for device management services.
+required: false
+type: array
+collectionFormat: csv
+uniqueItems: true
+items:
+  type: string
+  enum:
+    - serverName
+    - serverType
+    - createdDateTime
+    - updatedDateTime
+    - devices

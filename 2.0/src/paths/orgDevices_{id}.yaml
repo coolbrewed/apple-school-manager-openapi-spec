@@ -1,0 +1,34 @@
+get:
+  summary: Get device information
+  description: >
+    Get information about a device in an organization.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdevice-information)
+  operationId: getOrgDevice
+  tags:
+    - orgDevices
+  responses:
+    '200':
+      description: OK
+      schema:
+        type: object
+        properties:
+          data:
+            $ref: ../definitions/orgDevice.yaml
+          links:
+            $ref: ../definitions/pagedDocumentLinks.yaml
+        required:
+          - data
+          - links
+    '400':
+      $ref: ../responses/badRequest.yaml
+    '401':
+      $ref: ../responses/unauthorized.yaml
+    '403':
+      $ref: ../responses/forbidden.yaml
+    '404':
+      $ref: ../responses/notFound.yaml
+    '429':
+      $ref: ../responses/tooManyRequests.yaml
+  parameters:
+    - $ref: ../parameters/id.yaml
+    - $ref: ../parameters/fieldsOrgDevices.yaml

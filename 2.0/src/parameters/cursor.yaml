@@ -1,0 +1,5 @@
+name: cursor
+in: query
+description: The cursor for pagination.
+required: false
+type: string

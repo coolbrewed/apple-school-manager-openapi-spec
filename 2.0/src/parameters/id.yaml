@@ -1,0 +1,5 @@
+name: id
+in: path
+description: The opaque resource ID that uniquely identifies the resource.
+required: true
+type: string

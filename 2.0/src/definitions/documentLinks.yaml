@@ -1,0 +1,10 @@
+description: >
+  Self-links to documents that can contain information for one or more resources.
+  [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/documentlinks)
+type: object
+additionalProperties: true
+properties:
+  self:
+    $ref: ./selfLink.yaml
+required:
+  - self

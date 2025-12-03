@@ -1,0 +1,8 @@
+name: limit
+in: query
+description: The maximum number of resources to return per page.
+required: false
+type: integer
+format: int32
+default: 100
+maximum: 1000

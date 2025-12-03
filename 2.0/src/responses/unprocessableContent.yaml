@@ -1,0 +1,3 @@
+description: Unprocessable Content
+schema:
+  $ref: ../definitions/error.yaml

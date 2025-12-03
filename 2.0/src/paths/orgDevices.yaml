@@ -1,0 +1,37 @@
+get:
+  summary: Get organization devices
+  description: >
+    Get a list of devices in an organization that enroll using Automated Device Enrollment.
+    [Learn more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-org-devices)
+  operationId: getOrgDevices
+  tags:
+    - orgDevices
+  responses:
+    '200':
+      description: OK
+      schema:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: ../definitions/orgDevice.yaml
+          links:
+            $ref: ../definitions/pagedDocumentLinks.yaml
+          meta:
+            $ref: ../definitions/pagingInformation.yaml
+        required:
+          - data
+          - links
+    '400':
+      $ref: ../responses/badRequest.yaml
+    '401':
+      $ref: ../responses/unauthorized.yaml
+    '403':
+      $ref: ../responses/forbidden.yaml
+    '429':
+      $ref: ../responses/tooManyRequests.yaml
+  parameters:
+    - $ref: ../parameters/fieldsOrgDevices.yaml
+    - $ref: ../parameters/limit.yaml
+    - $ref: ../parameters/cursor.yaml

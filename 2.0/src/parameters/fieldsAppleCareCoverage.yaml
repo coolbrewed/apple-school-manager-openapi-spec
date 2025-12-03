@@ -1,0 +1,19 @@
+name: fields[appleCareCoverage]
+in: query
+description: A comma-separated list of the fields to include for AppleCare Coverage.
+required: false
+type: array
+collectionFormat: csv
+uniqueItems: true
+items:
+  type: string
+  enum:
+    - status
+    - paymentType
+    - description
+    - agreementNumber
+    - startDateTime
+    - endDateTime
+    - isRenewable
+    - isCanceled
+    - contractCancelDateTime

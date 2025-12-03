@@ -1,0 +1,3 @@
+description: Not Found
+schema:
+  $ref: ../definitions/error.yaml

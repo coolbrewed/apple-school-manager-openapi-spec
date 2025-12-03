@@ -1,0 +1,39 @@
+get:
+  summary: Get AppleCare coverage for a device
+  description: >
+    Get AppleCare coverage information for a device in an organization.
+    [Learn
+    more](https://developer.apple.com/documentation/appleschoolmanagerapi/get-applecare-coverage-for-a-device)
+  operationId: getOrgDeviceAppleCareCoverage
+  tags:
+    - orgDevices
+  responses:
+    '200':
+      description: OK
+      schema:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: ../definitions/appleCareCoverage.yaml
+          links:
+            $ref: ../definitions/pagedDocumentLinks.yaml
+          meta:
+            $ref: ../definitions/pagingInformation.yaml
+        required:
+          - data
+          - links
+    '400':
+      $ref: ../responses/badRequest.yaml
+    '401':
+      $ref: ../responses/unauthorized.yaml
+    '403':
+      $ref: ../responses/forbidden.yaml
+    '429':
+      $ref: ../responses/tooManyRequests.yaml
+  parameters:
+    - $ref: ../parameters/id.yaml
+    - $ref: ../parameters/fieldsAppleCareCoverage.yaml
+    - $ref: ../parameters/limit.yaml
+    - $ref: ../parameters/cursor.yaml
